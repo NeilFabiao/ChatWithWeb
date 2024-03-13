@@ -107,11 +107,12 @@ def get_response(user_input,current_time):
     })
 
     # Extract and return only the 'speak' part of the response
-    if 'thoughts' in response['answer'] and 'speak' in response['answer']['thoughts']:
-        return response['answer']['thoughts']['speak']
-    else:
-        # Return a default message or handle the absence of 'speak' however you prefer
-        return response['answer']
+    #if 'thoughts' in response['answer'] and 'speak' in response['answer']['thoughts']:
+    #    return response['answer']['thoughts']['speak']
+    #else:
+    #    # Return a default message or handle the absence of 'speak' however you prefer
+    #    return response['answer']
+    return response['answer']
         
 
 
