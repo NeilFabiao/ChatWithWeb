@@ -119,7 +119,6 @@ if website_url:
         st.error("The website is not accessible or does not exist.")
 else:
     st.info("Please enter a website URL above.")
-    update_activity()
 
 check_activity()  # Check for user activity at the end
 
