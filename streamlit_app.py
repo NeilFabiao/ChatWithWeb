@@ -56,11 +56,14 @@ def get_vectorstore_from_url(url):
 
     # Define the base path and database directory
     ABS_PATH: str = os.path.dirname(os.path.abspath(__file__))
-    DB_DIR: str = os.path.join(ABS_PATH, "docs", "chroma")  # Specify the directory path
+    DB_DIR: str = os.path.join(ABS_PATH, "chroma")  # Specify the directory path
 
     # Remove old database files if any
     if os.path.exists(DB_DIR):
         shutil.rmtree(DB_DIR)
+        
+        ABS_PATH: str = os.path.dirname(os.path.abspath(__file__))
+        DB_DIR: str = os.path.join(ABS_PATH, "chroma")  # Specify the directory path
         
     vector_store = Chroma.from_documents(document_chunks, OpenAIEmbeddings(),persist_directory=DB_DIR)
 
