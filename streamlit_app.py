@@ -5,6 +5,7 @@ sys.modules['sqlite3'] = sys.modules["pysqlite3"]
 
 import os
 import requests
+from urllib.parse import urlparse
 import shutil
 import streamlit as st
 from datetime import datetime
@@ -32,11 +33,23 @@ llm = ChatOpenAI(model_name=llm_name, temperature=0.7)
 
 #test using: https://lilianweng.github.io/posts/2023-06-23-agent/
 def check_website(url):
+    # Check if the URL is valid
     try:
-        response = requests.get(url, timeout=5)
-        return response.status_code == 200
-    except:
-        return False
+        result = urlparse(url)
+        # Check if scheme and netloc (domain) are present
+        if all([result.scheme, result.netloc]):
+            response = requests.get(url, timeout=5)
+            return response.status_code == 200, ""
+        else:
+            return False, "Invalid URL format."
+    except requests.ConnectionError:
+        return False, "Website could not be reached."
+    except requests.Timeout:
+        return False, "The request timed out."
+    except requests.RequestException as e:
+        return False, f"An error occurred: {str(e)}"
+    except Exception as e:  # General exception to catch unexpected errors
+        return False, f"An unexpected error occurred: {str(e)}
     
 # Function to retrieve the url data and store into vectordatabase
 def get_vectorstore_from_url(url):
@@ -159,6 +172,6 @@ if website_url != "":
                 with st.chat_message("Human"):
                     st.write(message.content)
     else:
-        st.error("The website is not accessible or does not exist.")
+        st.error(f"The website is not accessible or does not exist. {error_message}")
 else:
-    st.info("Please enter a website URL above")
+    st.info("Please enter a website URL above.")
