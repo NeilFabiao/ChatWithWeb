@@ -56,9 +56,7 @@ def get_vectorstore_from_url(url):
         
     embeddings = OpenAIEmbeddings()
         
-    #vector_store = Chroma.from_documents(document_chunks, embeddings)#,persist_directory=DB_DIR)
-
-    vector_store = DocArrayInMemorySearch.from_documents(docs, embeddings)
+    vector_store = Chroma.from_documents(document_chunks, embeddings)#,persist_directory=DB_DIR)
 
     return vector_store
     
