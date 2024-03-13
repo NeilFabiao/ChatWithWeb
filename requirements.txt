@@ -4,7 +4,6 @@ requests
 playwright
 pysqlite3-binary
 tiktoken
-shutil
 
 
 chromadb==0.4.22
