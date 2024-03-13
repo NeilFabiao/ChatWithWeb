@@ -49,7 +49,7 @@ def check_website(url):
     except requests.RequestException as e:
         return False, f"An error occurred: {str(e)}"
     except Exception as e:  # General exception to catch unexpected errors
-        return False, f"An unexpected error occurred: {str(e)}
+        return False, f"An unexpected error occurred: {str(e)}"
     
 # Function to retrieve the url data and store into vectordatabase
 def get_vectorstore_from_url(url):
