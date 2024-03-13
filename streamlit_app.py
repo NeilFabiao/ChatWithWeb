@@ -23,7 +23,7 @@ from langchain.chains.combine_documents import create_stuff_documents_chain
 from openai import OpenAI
 
 
-llm_name = "gpt-4-0613"#"gpt-4-0125-preview";gpt-3.5-turbo-0125;gpt-4-0613
+llm_name = "gpt-4-0125-preview"#"gpt-4-0125-preview";gpt-3.5-turbo-0125;gpt-4-0613
 llm = ChatOpenAI(model_name=llm_name, temperature=0.7)
 
 # Function to check website accessibility
