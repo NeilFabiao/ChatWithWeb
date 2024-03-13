@@ -14,7 +14,7 @@ import sqlite3
 from langchain_core.messages import AIMessage, HumanMessage
 from langchain_community.document_loaders import WebBaseLoader, AsyncChromiumLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_community.vectorstores import Chroma
+from langchain_community.vectorstores import Chroma, DocArrayInMemorySearch
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain.chains import create_history_aware_retriever, create_retrieval_chain
@@ -53,8 +53,12 @@ def get_vectorstore_from_url(url):
 
     #ABS_PATH: str = os.path.dirname(os.path.abspath(__file__))
     #DB_DIR: str = os.path.join(ABS_PATH, "db")  # Specify the directory path
-    
-    vector_store = Chroma.from_documents(document_chunks, OpenAIEmbeddings())#,persist_directory=DB_DIR)
+        
+    embeddings = OpenAIEmbeddings()
+        
+    #vector_store = Chroma.from_documents(document_chunks, embeddings)#,persist_directory=DB_DIR)
+
+    vector_store = DocArrayInMemorySearch.from_documents(docs, embeddings)
 
     return vector_store
     
