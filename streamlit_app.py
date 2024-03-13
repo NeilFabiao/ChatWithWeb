@@ -76,7 +76,7 @@ def get_combined_retriever_chain(vector_store, llm):
         ("system", "You are a virtual assistant named Jarvis (🤖), designed to help with learning. \
          Maintain a polite and engaging tone. Use the context from the website below to answer the question. \
          If unsure, say so without making things up. Keep answers concise but detailed when necessary.\
-         Current date and time: {current_time}\
+         today's date and time: {current_time}\
          ---\:{context}"),
         MessagesPlaceholder(variable_name="chat_history"),
         ("user", "{input}"),
