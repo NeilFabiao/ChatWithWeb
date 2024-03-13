@@ -30,7 +30,7 @@ llm = ChatOpenAI(model_name=llm_name, temperature=0.7)
 
 # Remove old database files if any
 ABS_PATH: str = os.path.dirname(os.path.abspath(__file__))
-DB_DIR: str = os.path.join(ABS_PATH, "chroma")  # Specify the directory path
+DB_DIR: str = os.path.join(ABS_PATH, "chroma_db")  # Specify the directory path
 
 if os.path.exists(DB_DIR):
     shutil.rmtree(DB_DIR)
@@ -62,7 +62,7 @@ def get_vectorstore_from_url(url):
     #DB_DIR: str = os.path.join(ABS_PATH, "db")
 
     ABS_PATH: str = os.path.dirname(os.path.abspath(__file__))
-    DB_DIR: str = os.path.join(ABS_PATH, "chroma")  # Specify the directory path
+    DB_DIR: str = os.path.join(ABS_PATH, "chroma_db")  # Specify the directory path
     
     vector_store = Chroma.from_documents(document_chunks, OpenAIEmbeddings(),persist_directory=DB_DIR)
 
