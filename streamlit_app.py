@@ -17,9 +17,9 @@ from langchain_openai import OpenAIEmbeddings, ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain.chains import create_history_aware_retriever, create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
-from langchain.memory import ConversationBufferWindowMemory
-from langchain.chains import ConversationalRetrievalChain
-from langchain.prompts import PromptTemplate
+#from langchain.memory import ConversationBufferWindowMemory
+#from langchain.chains import ConversationalRetrievalChain
+#from langchain.prompts import PromptTemplate
 from openai import OpenAI
 
 
