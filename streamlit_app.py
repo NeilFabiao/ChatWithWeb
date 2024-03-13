@@ -1,45 +1,146 @@
+import sys
+__import__('pysqlite3')
+import pysqlite3
+sys.modules['sqlite3'] = sys.modules["pysqlite3"]
+
+import os
+import requests
 import streamlit as st
+from datetime import datetime
+import tiktoken
+import sqlite3
+from langchain_core.messages import AIMessage, HumanMessage
+from langchain_community.document_loaders import WebBaseLoader, AsyncChromiumLoader
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_community.vectorstores import Chroma
+from langchain_openai import OpenAIEmbeddings, ChatOpenAI
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+from langchain.chains import create_history_aware_retriever, create_retrieval_chain
+from langchain.chains.combine_documents import create_stuff_documents_chain
+from langchain.memory import ConversationBufferWindowMemory
+from langchain.chains import ConversationalRetrievalChain
+from langchain.prompts import PromptTemplate
 from openai import OpenAI
-#from langchain.llms import OpenAI
 
-st.title("Jarvis 🤖🔗")
 
-# Set OpenAI API key from Streamlit secrets
-# .streamlit/secrets.toml
+llm_name = "gpt-3.5-turbo"#"gpt-4-0125-preview"
+llm = ChatOpenAI(model_name=llm_name, temperature=0.7)
 
-# Set OpenAI API key from Streamlit secrets
-client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+# Function to check website accessibility
 
-# Set a default model
-if "openai_model" not in st.session_state:
-    st.session_state["openai_model"] = "gpt-3.5-turbo"
 
-# Initialize chat history
-if "messages" not in st.session_state:
-    st.session_state.messages = []
+#test using: https://lilianweng.github.io/posts/2023-06-23-agent/
+def check_website(url):
+    try:
+        response = requests.get(url, timeout=5)
+        return response.status_code == 200
+    except:
+        return False
+    
+# Function to retrieve the url data and store into vectordatabase
+def get_vectorstore_from_url(url):
+    # get the text in document form
+    loader = WebBaseLoader(url)
+    document = loader.load()
+    
+    # split the document into chunks
+    text_splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(chunk_size=1500, chunk_overlap=150)
+    document_chunks = text_splitter.split_documents(document)
+    
+    # create a vectorstore from the chunks
+    ABS_PATH: str = os.path.dirname(os.path.abspath(__file__))
+    DB_DIR: str = os.path.join(ABS_PATH, "db")
+    vector_store = Chroma.from_documents(document_chunks, OpenAIEmbeddings(),persist_directory=DB_DIR)
 
-# Display chat messages from history on app rerun
-for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
-        st.markdown(message["content"])
+    return vector_store
+    
 
-# Accept user input
-if prompt := st.chat_input("What is up?"):
-    # Add user message to chat history
-    st.session_state.messages.append({"role": "user", "content": prompt})
-    # Display user message in chat message container
-    with st.chat_message("user"):
-        st.markdown(prompt)
+def get_combined_retriever_chain(vector_store, llm):
+    # Define retrievers with different search types and prompts
+    retriever = vector_store.as_retriever()
 
-# Display assistant response in chat message container
-    with st.chat_message("assistant"):
-        stream = client.chat.completions.create(
-            model=st.session_state["openai_model"],
-            messages=[
-                {"role": m["role"], "content": m["content"]}
-                for m in st.session_state.messages
-            ],
-            stream=True,
-        )
-        response = st.write_stream(stream)
-    st.session_state.messages.append({"role": "assistant", "content": response})
+    # Prepare the context prompt
+    context_prompt = ChatPromptTemplate.from_messages([
+        MessagesPlaceholder(variable_name="chat_history"),
+        ("user", "{input}"),
+        ("user", "you can use memory i.e previous conversation of the chat can be used to help answering questions from the user")
+    ])
+
+    # Prepare the conversation prompt including current date and time
+    conversation_prompt = ChatPromptTemplate.from_messages([
+        MessagesPlaceholder(variable_name="chat_history"),
+        ("user", "{input}"),
+        ("system", "You are a virtual assistant named Jarvis (🤖), designed to help with learning.\
+         Use the context from the website below to answer the question. \
+         The user may make gramatical errors, answer and then ask\
+         Current date and time: {current_time}\
+         ---\:{context}")
+    ])
+
+    # Prepare the current date and time
+    date_prompt = ChatPromptTemplate.from_messages([
+        MessagesPlaceholder(variable_name="chat_history"),
+        ("user", "{input}"),
+        ("system", "Current date and time: {current_time}"),
+    ])
+
+    # First create the retriever chain for fetching context
+    context_retriever_chain = create_history_aware_retriever(llm, retriever, context_prompt)
+
+    # Then create the document chain for answering based on retrieved documents
+    conversational_rag_chain = create_stuff_documents_chain(llm, conversation_prompt)
+
+    # Combine both into one retrieval chain
+    combined_retrieval_chain = create_retrieval_chain(context_retriever_chain, conversational_rag_chain)
+
+    return combined_retrieval_chain
+
+def get_response(user_input,current_time):
+    # Combine the creation and use of the context and conversational chains
+    combined_chain = get_combined_retriever_chain(st.session_state.vector_store, llm)
+    
+    # Invoke the combined chain with chat history and user input
+    response = combined_chain.invoke({
+        "chat_history": st.session_state.chat_history,
+        "input": user_input,
+        "current_time": current_time,
+    })
+    
+    return response['answer']
+
+
+    
+# Streamlit app configuration
+st.set_page_config(page_title="Jarvis 🤖🔗 - Chat with websites", page_icon="🤖")
+st.title("Jarvis 🤖🔗 - Chat with websites")
+
+# Main page settings
+st.header("Settings")
+website_url = st.text_input("Website URL")
+
+if website_url != "":
+    if check_website(website_url):
+        if "chat_history" not in st.session_state:
+            st.session_state.chat_history = [AIMessage(content="Hello, I am a bot. How can I help you?")]
+        if "vector_store" not in st.session_state:
+            st.session_state.vector_store = get_vectorstore_from_url(website_url)
+
+        user_query = st.chat_input("Type your message here...")
+        if user_query:
+            chat_history = st.session_state.chat_history
+            current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            response = get_response(user_query,current_time)
+            st.session_state.chat_history.append(HumanMessage(content=user_query))
+            st.session_state.chat_history.append(AIMessage(content=response))
+
+        for message in st.session_state.chat_history:
+            if isinstance(message, AIMessage):
+                with st.chat_message("AI"):
+                    st.write(message.content)
+            elif isinstance(message, HumanMessage):
+                with st.chat_message("Human"):
+                    st.write(message.content)
+    else:
+        st.error("The website is not accessible or does not exist.")
+else:
+    st.info("Please enter a website URL above")
