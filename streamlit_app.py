@@ -27,16 +27,8 @@ from openai import OpenAI
 
 llm_name = "gpt-3.5-turbo-0125"#"gpt-4-0125-preview";gpt-3.5-turbo-0125;gpt-4-0613
 llm = ChatOpenAI(model_name=llm_name, temperature=0.7)
-
-# Remove old database files if any
-ABS_PATH: str = os.path.dirname(os.path.abspath(__file__))
-DB_DIR: str = os.path.join(ABS_PATH, "db")  # Specify the directory path
-
-if os.path.exists(DB_DIR):
-    shutil.rmtree(DB_DIR)
         
 # Function to check website accessibility
-
 
 #test using: https://lilianweng.github.io/posts/2023-06-23-agent/
 def check_website(url):
@@ -58,11 +50,9 @@ def get_vectorstore_from_url(url):
     document_chunks = text_splitter.split_documents(document)
     
     # create a vectorstore from the chunks
-    #ABS_PATH: str = os.path.dirname(os.path.abspath(__file__))
-    #DB_DIR: str = os.path.join(ABS_PATH, "db")
 
-    ABS_PATH: str = os.path.dirname(os.path.abspath(__file__))
-    DB_DIR: str = os.path.join(ABS_PATH, "db")  # Specify the directory path
+    #ABS_PATH: str = os.path.dirname(os.path.abspath(__file__))
+    #DB_DIR: str = os.path.join(ABS_PATH, "db")  # Specify the directory path
     
     vector_store = Chroma.from_documents(document_chunks, OpenAIEmbeddings(),persist_directory=DB_DIR)
 
