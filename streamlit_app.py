@@ -119,3 +119,4 @@ else:
     st.info("Please enter a website URL above.")
 
 check_activity()  # Check for user activity at the end
+st.write('This sesison will be killed after 3 minutes')
