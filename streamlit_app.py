@@ -5,6 +5,7 @@ sys.modules['sqlite3'] = sys.modules["pysqlite3"]
 
 import os
 import requests
+import shutil
 import streamlit as st
 from datetime import datetime
 import tiktoken
@@ -48,8 +49,17 @@ def get_vectorstore_from_url(url):
     document_chunks = text_splitter.split_documents(document)
     
     # create a vectorstore from the chunks
+    #ABS_PATH: str = os.path.dirname(os.path.abspath(__file__))
+    #DB_DIR: str = os.path.join(ABS_PATH, "db")
+
+    # Define the base path and database directory
     ABS_PATH: str = os.path.dirname(os.path.abspath(__file__))
-    DB_DIR: str = os.path.join(ABS_PATH, "db")
+    DB_DIR: str = os.path.join(ABS_PATH, "docs", "chroma")  # Specify the directory path
+
+    # Remove old database files if any
+    if os.path.exists(DB_DIR):
+        shutil.rmtree(DB_DIR)
+        
     vector_store = Chroma.from_documents(document_chunks, OpenAIEmbeddings(),persist_directory=DB_DIR)
 
     return vector_store
