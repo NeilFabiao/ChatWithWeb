@@ -31,10 +31,10 @@ def update_activity():
 
 def check_activity():
     time_since_last_activity = datetime.now() - st.session_state.last_activity
-    if time_since_last_activity > timedelta(minutes=3):  # 3 minutes of inactivity
+    if time_since_last_activity > timedelta(minutes=2):  # 3 minutes of inactivity
         st.stop()  # Stop the Streamlit app
-    elif time_since_last_activity > timedelta(minutes=2):  # More than 2 minutes of inactivity
-        st.warning('You have been inactive for more than 2 minutes. The session will end after 1 more minute of inactivity.')
+    elif time_since_last_activity > timedelta(minutes=1):  # More than 2 minutes of inactivity
+        st.warning('You have been inactive for more than 1 minutes. The session will end after 1 more minute of inactivity.')
 
 check_activity()  # Check for user activity at the start
 
