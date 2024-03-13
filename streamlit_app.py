@@ -23,7 +23,7 @@ from langchain.prompts import PromptTemplate
 from openai import OpenAI
 
 
-llm_name = "gpt-3.5-turbo"#"gpt-4-0125-preview"
+llm_name = "gpt-4-0613"#"gpt-4-0125-preview";gpt-3.5-turbo-0125;gpt-4-0613
 llm = ChatOpenAI(model_name=llm_name, temperature=0.7)
 
 # Function to check website accessibility
@@ -63,7 +63,7 @@ def get_combined_retriever_chain(vector_store, llm):
     context_prompt = ChatPromptTemplate.from_messages([
         MessagesPlaceholder(variable_name="chat_history"),
         ("user", "{input}"),
-        ("user", "you can use {chat_history} i.e previous conversation of the chat can be used to help answer questions from the user")
+        ("user", "you can use {chat_history} i.e previous conversation to recall information from website and the user")
     ])
 
     # Prepare the conversation prompt including current date and time
