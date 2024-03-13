@@ -29,10 +29,12 @@ if 'last_activity' not in st.session_state:
 def update_activity():
     st.session_state.last_activity = datetime.now()
 
-# Function to check if the session should timeout
 def check_activity():
-    if datetime.now() - st.session_state.last_activity > timedelta(minutes=3):  # 3 minutes of inactivity
+    time_since_last_activity = datetime.now() - st.session_state.last_activity
+    if time_since_last_activity > timedelta(minutes=3):  # 3 minutes of inactivity
         st.stop()  # Stop the Streamlit app
+    elif time_since_last_activity > timedelta(minutes=2):  # More than 2 minutes of inactivity
+        st.warning('You have been inactive for more than 2 minutes. The session will end after 1 more minute of inactivity.')
 
 check_activity()  # Check for user activity at the start
 
@@ -119,4 +121,4 @@ else:
     st.info("Please enter a website URL above.")
 
 check_activity()  # Check for user activity at the end
-st.write('This sesison will be killed after 3 minutes')
+
