@@ -54,7 +54,7 @@ def get_vectorstore_from_url(url):
     #ABS_PATH: str = os.path.dirname(os.path.abspath(__file__))
     #DB_DIR: str = os.path.join(ABS_PATH, "db")  # Specify the directory path
     
-    vector_store = Chroma.from_documents(document_chunks, OpenAIEmbeddings(),persist_directory=DB_DIR)
+    vector_store = Chroma.from_documents(document_chunks, OpenAIEmbeddings())#,persist_directory=DB_DIR)
 
     return vector_store
     
