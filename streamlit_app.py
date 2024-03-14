@@ -21,14 +21,6 @@ from langchain.chains import create_history_aware_retriever, create_retrieval_ch
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from openai import OpenAI
 
-# Clearing the session state by deleting each key-value pair
-keys = list(st.session_state.keys())
-for key in keys:
-    del st.session_state[key]
-st.cache_data.clear()
-st.cache_resource.clear()
-#st.rerun()  # Rerun the app, which now has an empty state
-
 # Initialize session state for last activity
 if 'last_activity' not in st.session_state:
     st.session_state.last_activity = datetime.now()
