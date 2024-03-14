@@ -112,6 +112,7 @@ with col2:
     if st.button('Restart'):
         st.session_state.clear()  # Clear the session state
         st.experimental_rerun()  # Rerun the app, which resets everything
+        st.session_state.website_url = ""
 
 # Continue with the rest of your app
 website_url = st.text_input("Website URL", on_change=update_activity)
