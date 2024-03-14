@@ -82,7 +82,7 @@ def get_combined_retriever_chain(vector_store, llm):
     context_prompt = ChatPromptTemplate.from_messages([
         MessagesPlaceholder(variable_name="chat_history"),
         ("user", "{input}"),
-        ("user", "if there is an above conversation with user, generate a search query to look up in order to get information relevant to the conversation")
+        ("user", "if there is an above conversation with user, only look up information relevant to the current website---\:{chat_history}")
     ])
     conversation_prompt = ChatPromptTemplate.from_messages([
         ("system", "You are a virtual assistant named Jarvis (🤖), designed to help with learning. \
