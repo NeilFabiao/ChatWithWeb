@@ -101,15 +101,15 @@ def get_response(user_input, current_time):
 st.set_page_config(page_title="Jarvis 🤖🔗 - Chat with websites", page_icon="🤖")
 st.title("Jarvis 🤖🔗 - Chat with websites")
 
-# Create columns for the 'Settings' header and the 'Rerun' button
-col1, col2 = st.columns([9, 2])  # Adjust the ratio as needed to align with your layout
+# Adjust the ratio or add more granularity if needed
+col1, col2 = st.columns([0.8, 0.2], gap="small")
 
 with col1:
-    st.header("Settings")
+    st.markdown("## Settings", unsafe_allow_html=True)  # Using markdown to closely match header style
 
 with col2:
+    st.write("")  # This can be used to adjust vertical alignment if necessary
     if st.button('Restart'):
-        # Define the action for the Quit button
         st.session_state.clear()  # Clear the session state
         st.experimental_rerun()  # Rerun the app, which resets everything
 
