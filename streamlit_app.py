@@ -63,7 +63,7 @@ def init_or_reset_vector_store(url):
 def get_vectorstore_from_url(url):
     loader = WebBaseLoader(url)
     document = loader.load()
-    text_splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(chunk_size=1500, chunk_overlap=150)
+    text_splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(chunk_size=1000, chunk_overlap=150)
     document_chunks = text_splitter.split_documents(document)
     embeddings = OpenAIEmbeddings()
     vector_store = Chroma.from_documents(document_chunks, embeddings)
