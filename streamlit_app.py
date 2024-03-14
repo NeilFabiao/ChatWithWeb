@@ -12,6 +12,7 @@ from datetime import datetime, timedelta
 import tiktoken
 import sqlite3
 from langchain_core.messages import AIMessage, HumanMessage
+from langchain_community.document_transformers import BeautifulSoupTransformer
 from langchain_community.document_loaders import WebBaseLoader, AsyncChromiumLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma, DocArrayInMemorySearch
