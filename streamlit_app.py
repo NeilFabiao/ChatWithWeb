@@ -32,7 +32,7 @@ if 'last_activity' not in st.session_state:
         del st.session_state[key]
     st.cache_data.clear()
     st.cache_resource.clear()
-    st.rerun()  # Rerun the app, which now has an empty state
+    #st.rerun()  # Rerun the app, which now has an empty state
 
 # Function to update the session state variable to the current time
 def update_activity():
