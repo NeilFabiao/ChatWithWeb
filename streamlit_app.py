@@ -118,6 +118,7 @@ with col2:
         for key in keys:
             del st.session_state[key]
         st.cache_data.clear()
+        st.cache_resource.clear()
         st.rerun()  # Rerun the app, which now has an empty state
 
 # Continue with the rest of your app
