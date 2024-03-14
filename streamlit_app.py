@@ -110,8 +110,8 @@ with col1:
 with col2:
     st.write("")  # This can be used to adjust vertical alignment if necessary
     if st.button('Restart'):
-        st.session_state.clear()  # Clear the session state
-        st.experimental_rerun()  # Rerun the app, which resets everything
+        st.session_state.clear()  # Clearing the session state
+        st.experimental_rerun()  # Rerun the app, which now has an empty state
 
 # Continue with the rest of your app
 website_url = st.text_input("Website URL", on_change=update_activity)
