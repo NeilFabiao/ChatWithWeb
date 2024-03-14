@@ -56,7 +56,7 @@ def init_or_reset_vector_store(url):
     if 'last_url' not in st.session_state or url != st.session_state.last_url:
         # Resetting the vector store and related state
         st.session_state.vector_store = None  # This effectively resets the vector store
-        st.session_state.chat_history = [AIMessage(content="Hello, I am a bot. How can I help you?")]  # Reset chat history too if URL changes
+        st.session_state.chat_history = [AIMessage(content="Hello, I am Jarvis 🤖. How can I assist you today?")]  # Reset chat history too if URL changes
         st.session_state.last_url = url  # Update the last URL
 
     # Initialize a new vector store if it doesn't exist
