@@ -110,7 +110,13 @@ with col1:
 with col2:
     st.write("")  # This can be used to adjust vertical alignment if necessary
     if st.button('Restart'):
-        st.session_state.clear()  # Clearing the session state
+        #st.session_state.clear()  # Clearing the session state
+        #st.rerun()  # Rerun the app, which now has an empty state
+        
+        # Clearing the session state by deleting each key-value pair
+        keys = list(st.session_state.keys())
+        for key in keys:
+            del st.session_state[key]
         st.rerun()  # Rerun the app, which now has an empty state
 
 # Continue with the rest of your app
