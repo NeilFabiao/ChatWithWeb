@@ -131,3 +131,17 @@ else:
 
 check_activity()  # Check for user activity at the end
 
+# Add some space before the quit button if needed
+st.write('\n\n\n')  # Adjust the number of newlines as needed
+
+# Create columns for layout
+col1, col2 = st.columns([1, 5])  # Adjust the ratio as needed for your layout
+
+# In the leftmost column, place the quit button
+with col1:
+    if st.button('Quit'):
+        # Here you can define what happens when the button is clicked
+        # For example, you might want to clear the session state or redirect
+        st.session_state.clear()  # Clearing the session state
+        st.experimental_rerun()  # Rerun the app, which now has an empty state
+
