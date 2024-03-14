@@ -100,7 +100,18 @@ def get_response(user_input, current_time):
 
 st.set_page_config(page_title="Jarvis 🤖🔗 - Chat with websites", page_icon="🤖")
 st.title("Jarvis 🤖🔗 - Chat with websites")
-st.header("Settings")
+
+# Create columns for the 'Settings' header and the 'Rerun' button
+col1, col2 = st.columns([9, 1])  # Adjust the ratio as needed to align with your layout
+
+with col1:
+    st.header("Settings")
+
+with col2:
+    if st.button('Rerun'):
+        st.experimental_rerun()
+
+# Continue with the rest of your app
 website_url = st.text_input("Website URL", on_change=update_activity)
 
 if website_url:
