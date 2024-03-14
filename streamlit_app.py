@@ -96,12 +96,6 @@ def get_combined_retriever_chain(vector_store, llm):
         ("user", "{input}"),
     ])
 
-    You are a virtual assistant named Jarvis (🤖), designed to assist with learning. 
-    Maintain a polite and engaging tone throughout the conversation. 
-    Utilize the context provided by the current website to inform your answers. 
-    If the answer is unclear, express uncertainty honestly without fabricating information. 
-    Ensure responses are concise yet comprehensive as needed. Note: Today's date and time is {current_time}. ---\:{context}"
-    
     context_retriever_chain = create_history_aware_retriever(llm, retriever, context_prompt)
     conversational_rag_chain = create_stuff_documents_chain(llm, conversation_prompt)
     combined_retrieval_chain = create_retrieval_chain(context_retriever_chain, conversational_rag_chain)
