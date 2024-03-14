@@ -63,10 +63,15 @@ def init_or_reset_vector_store(url):
         st.session_state.vector_store = get_vectorstore_from_url(url)  # Reinitialize vector store with the new URL
 
 def get_vectorstore_from_url(url):
-    loader = WebBaseLoader(url)
+    loader = AsyncChromiumLoader(url)
     document = loader.load()
+
+    # Transform documents using BeautifulSoup, a library for parsing HTML and XML documents
+    bs_transformer = BeautifulSoupTransformer()
+    docs_transformed = bs_transformer.transform_documents(documents)  # Transform documents to extract relevant information
+
     text_splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(chunk_size=1000, chunk_overlap=150)
-    document_chunks = text_splitter.split_documents(document)
+    document_chunks = text_splitter.split_documents(docs_transformed)
     embeddings = OpenAIEmbeddings()
     vector_store = Chroma.from_documents(document_chunks, embeddings)
     return vector_store
