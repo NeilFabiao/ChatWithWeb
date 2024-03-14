@@ -108,7 +108,7 @@ if website_url:
         # Initialize or reset the vector store for the current URL
         init_or_reset_vector_store(website_url)
 
-        user_query = st.chat_input("Type your message here...", on_change=update_activity)
+        user_query = st.chat_input("Type your message here...")
         if user_query:
             chat_history = st.session_state.chat_history
             current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
