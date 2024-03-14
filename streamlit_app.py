@@ -108,8 +108,10 @@ with col1:
     st.header("Settings")
 
 with col2:
-    if st.button('Rerun'):
-        st.experimental_rerun()
+    if st.button('Restart'):
+    # Define the action for the Quit button
+    st.session_state.clear()  # Clear the session state
+    st.experimental_rerun()  # Rerun the app, which resets everything
 
 # Continue with the rest of your app
 website_url = st.text_input("Website URL", on_change=update_activity)
