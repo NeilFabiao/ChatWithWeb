@@ -31,9 +31,9 @@ def update_activity():
 
 def check_activity():
     time_since_last_activity = datetime.now() - st.session_state.last_activity
-    if time_since_last_activity > timedelta(minutes=2):  # 3 minutes of inactivity
+    if time_since_last_activity > timedelta(minutes=3):  # 3 minutes of inactivity
         st.stop()  # Stop the Streamlit app
-    elif time_since_last_activity > timedelta(minutes=1):  # More than 2 minutes of inactivity
+    elif time_since_last_activity > timedelta(minutes=2):  # More than 2 minutes of inactivity
         st.warning('You have been inactive for more than 1 minutes. The session will end after 1 more minute of inactivity.')
 
 check_activity()  # Check for user activity at the start
@@ -47,6 +47,18 @@ def check_website(url):
         return response.status_code == 200
     except:
         return False
+        
+def init_or_reset_vector_store(url):
+    # Clear existing data if the URL has changed
+    if 'last_url' not in st.session_state or url != st.session_state.last_url:
+        # Resetting the vector store and related state
+        st.session_state.vector_store = None  # This effectively resets the vector store
+        st.session_state.chat_history = [AIMessage(content="Hello, I am a bot. How can I help you?")]  # Reset chat history too if URL changes
+        st.session_state.last_url = url  # Update the last URL
+
+    # Initialize a new vector store if it doesn't exist
+    if st.session_state.vector_store is None:
+        st.session_state.vector_store = get_vectorstore_from_url(url)  # Reinitialize vector store with the new URL
 
 def get_vectorstore_from_url(url):
     loader = WebBaseLoader(url)
@@ -93,11 +105,8 @@ website_url = st.text_input("Website URL", on_change=update_activity)
 
 if website_url:
     if check_website(website_url):
-        if "chat_history" not in st.session_state:
-            st.session_state.chat_history = [AIMessage(content="Hello, I am a bot. How can I help you?")]
-        if "vector_store" not in st.session_state:
-            st.session_state.vector_store = get_vectorstore_from_url(website_url)
-            update_activity()
+        # Initialize or reset the vector store for the current URL
+        init_or_reset_vector_store(website_url)
 
         user_query = st.chat_input("Type your message here...")
         if user_query:
