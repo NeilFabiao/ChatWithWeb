@@ -27,9 +27,9 @@ if 'last_activity' not in st.session_state:
 
     #when the app starts clear the cache
     # Clearing the session state by deleting each key-value pair
-    keys = list(st.session_state.keys())
-    for key in keys:
-        del st.session_state[key]
+    #keys = list(st.session_state.keys())
+    #for key in keys:
+    #    del st.session_state[key]
     st.cache_data.clear()
     st.cache_resource.clear()
     #st.rerun()  # Rerun the app, which now has an empty state
