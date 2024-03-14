@@ -102,7 +102,7 @@ st.set_page_config(page_title="Jarvis 🤖🔗 - Chat with websites", page_icon=
 st.title("Jarvis 🤖🔗 - Chat with websites")
 
 # Create columns for the 'Settings' header and the 'Rerun' button
-col1, col2 = st.columns([9, 1])  # Adjust the ratio as needed to align with your layout
+col1, col2 = st.columns([9, 2])  # Adjust the ratio as needed to align with your layout
 
 with col1:
     st.header("Settings")
