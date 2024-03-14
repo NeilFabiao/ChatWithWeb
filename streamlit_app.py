@@ -115,7 +115,12 @@ with col2:
         st.session_state.website_url = ""
 
 # Continue with the rest of your app
-website_url = st.text_input("Website URL", on_change=update_activity)
+#website_url = st.text_input("Website URL", on_change=update_activity)
+
+# Use the session state variable as the value of the text input
+website_url = st.text_input("Website URL", value=st.session_state.website_url, key="website_url", on_change=update_activity)
+# Update the session state with the new URL whenever it's changed
+st.session_state.website_url = website_url
 
 if website_url:
     if check_website(website_url):
