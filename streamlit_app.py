@@ -25,6 +25,10 @@ from openai import OpenAI
 if 'last_activity' not in st.session_state:
     st.session_state.last_activity = datetime.now()
 
+    #when the app starts clear the cache
+    st.cache_data.clear()
+    st.cache_resource.clear()
+
 # Function to update the session state variable to the current time
 def update_activity():
     st.session_state.last_activity = datetime.now()
