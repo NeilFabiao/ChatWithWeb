@@ -25,15 +25,6 @@ from openai import OpenAI
 if 'last_activity' not in st.session_state:
     st.session_state.last_activity = datetime.now()
 
-    #when the app starts clear the cache
-    # Clearing the session state by deleting each key-value pair
-    keys = list(st.session_state.keys())
-    for key in keys:
-        del st.session_state[key]
-    st.cache_data.clear()
-    st.cache_resource.clear()
-    #st.rerun()  # Rerun the app, which now has an empty state
-
 # Function to update the session state variable to the current time
 def update_activity():
     st.session_state.last_activity = datetime.now()
@@ -49,6 +40,14 @@ check_activity()  # Check for user activity at the start
 
 llm_name = "gpt-3.5-turbo-0125"
 llm = ChatOpenAI(model_name=llm_name, temperature=0.7)
+
+# Clearing the session state by deleting each key-value pair
+keys = list(st.session_state.keys())
+for key in keys:
+    del st.session_state[key]
+st.cache_data.clear()
+st.cache_resource.clear()
+st.rerun()  # Rerun the app, which now has an empty state
 
 def check_website(url):
     try:
