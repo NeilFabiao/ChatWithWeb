@@ -114,7 +114,6 @@ st.title("Jarvis 🤖🔗 - Chat with websites")
 
 # Sidebar for description and use cases
 with st.sidebar:
-    st.write("## Project Overview")
     st.markdown(""" ## Project Overview
 
 This application, Jarvis 🤖🔗, is designed to assist with summarization and question answering from a specific website. It is particularly useful for extracting concise information and answering specific questions from extensive text materials, making it an ideal tool for researchers, students, and anyone looking to quickly gather insights from web content.
