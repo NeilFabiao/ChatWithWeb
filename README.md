@@ -1,4 +1,4 @@
-# Chat With websites
+# Chat With websites (Experimental stage - Beta)
 
 Exploring the capabilities of Retrieval-Augmented Generation (RAG) that leverages web content as a knowledge base to provide informed responses. 
 
