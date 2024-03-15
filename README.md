@@ -23,8 +23,6 @@ Explore the insightful discussions in [Lilian Weng's Blog Post](https://lilianwe
 
 ### References ###
 
-**References:**
-
 1. Conversations and insights from various individuals encountered during the project's development.
 2. Harrison Chase, "LangChain: Chat with Your Data" from DeepLearningAI. Available at: [DeepLearning.AI - LangChain](https://www.deeplearning.ai/short-courses/langchain-chat-with-your-data/).
 3. Sophia Yang, LangChain tutorials on GitHub. Accessible at: [Sophia MYang - LangChain Tutorials](https://github.com/sophiamyang/tutorials-LangChain).
