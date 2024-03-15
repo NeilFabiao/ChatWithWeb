@@ -135,8 +135,6 @@ with col2:
 website_url = "https://lilianweng.github.io/posts/2023-06-23-agent/"
 st.text_input("Website URL", value=website_url, disabled=True, on_change=update_activity)
 
-
-
 if website_url:
     if check_website(website_url):
         # Initialize or reset the vector store for the current URL
