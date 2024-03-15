@@ -41,7 +41,7 @@ def check_activity():
 
 check_activity()  # Check for user activity at the start
 
-llm_name = "gpt-3.5-turbo-0125"
+llm_name = "gpt-4-0125-preview"#gpt-4-0125-preview
 llm = ChatOpenAI(model_name=llm_name, temperature=0.7)
 
 def check_website(url):
