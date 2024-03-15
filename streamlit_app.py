@@ -112,8 +112,8 @@ st.markdown("""
 ## Project Overview
 
 Jarvis 🤖🔗 is designed to assist with summarization and question answering from the website [Lilian Weng's Blog Post](https://lilianweng.github.io/posts/2023-06-23-agent/) . 
-It is particularly useful for providing answers to specific questions from extensive text materials, 
-making it an ideal tool for anyone looking to quickly gather insights from web content. (For a full description, check the sidebar in the top right corner.)
+Useful for providing answers to specific questions from extensive text materials, 
+for anyone looking to quickly gather insights from web content. (For a full description, check the sidebar in the top right corner.)
 
 ### Additional Use Cases:
 - **Conversational AI for Business**: Corporate users can integrate Jarvis into their intranet to provide employees with instant answers from company documents, reducing the time spent searching for information.
