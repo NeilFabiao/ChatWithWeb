@@ -111,6 +111,18 @@ st.set_page_config(page_title="Jarvis 🤖🔗 - Chat with websites", page_icon=
 st.title("Jarvis 🤖🔗 - Chat with websites")
 
 # Provide a short description of what the project is about along with a simple use case example
+st.markdown(""" ## Project Overview
+
+Jarvis 🤖🔗, is designed to assist with summarization and question answering from a specific website. 
+Useful for extracting concise information and answering specific questions from long text materials, 
+making it an ideal tool for anyone looking to quickly gather insights from web content. (Full description on the sidebar - top roght
+
+### Additional Use Cases:
+- **Conversational AI for Business**: Corporate users integrate Jarvis into their intranet to provide employees with instant answers from company documents, reducing time spent searching for information.
+- **Customer Support Automation**: Companies use Jarvis to answer common customer queries based on their product manuals and FAQ sections, improving customer service efficiency.
+
+)""",unsafe_allow_html=True)
+
 
 # Sidebar for description and use cases
 with st.sidebar:
@@ -128,11 +140,13 @@ This application, Jarvis 🤖🔗, is designed to assist with summarization and 
 ### Additional Use Cases:
 - **Conversational AI for Business**: Corporate users integrate Jarvis into their intranet to provide employees with instant answers from company documents, reducing time spent searching for information.
 - **Customer Support Automation**: Companies use Jarvis to answer common customer queries based on their product manuals and FAQ sections, improving customer service efficiency.
-Website for analysis: [Lilian Weng's Blog Post](https://lilianweng.github.io/posts/2023-06-23-agent/)
+
+## Website for analysis:
+[Lilian Weng's Blog Post](https://lilianweng.github.io/posts/2023-06-23-agent/)
 """, unsafe_allow_html=True)
 
 # Main area for chat or other interactive elements
-st.write("This application, Jarvis 🤖🔗, is designed to assist with summarization and question answering from a specific website. It is particularly useful for extracting concise information and answering specific questions from extensive text materials, making it an ideal tool for researchers, students, and anyone looking to quickly gather insights from web content. (Full description on the sidebar)")
+
 
 
 # Continue with the rest of your app
