@@ -126,8 +126,6 @@ This application, Jarvis 🤖🔗, is designed to assist with summarization and 
 ### Additional Use Cases:
 - **Conversational AI for Business**: Corporate users integrate Jarvis into their intranet to provide employees with instant answers from company documents, reducing time spent searching for information.
 - **Customer Support Automation**: Companies use Jarvis to answer common customer queries based on their product manuals and FAQ sections, improving customer service efficiency.
-- **Personal Learning Assistant**: Individuals like Alex use Jarvis to explore a variety of topics based on their interests, from history to science to cooking, making learning new topics an enjoyable and efficient process.
-
 Website for analysis: [Lilian Weng's Blog Post](https://lilianweng.github.io/posts/2023-06-23-agent/)
 """, unsafe_allow_html=True)
 
