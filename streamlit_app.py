@@ -80,15 +80,12 @@ def get_combined_retriever_chain(vector_store, llm):
     context_prompt = ChatPromptTemplate.from_messages([
         MessagesPlaceholder(variable_name="chat_history"),
         ("user", "{input}"),
-        ("user", "Utilize the previous conversation with the user \
-        to guide the search. Focus only on information about the current website")
+        ("user", "Utilize the previous conversation with the user to guide the search.")
     ])
     conversation_prompt = ChatPromptTemplate.from_messages([
-        ("system", "You are a virtual assistant named Jarvis (🤖), designed to assist with learning.\
-        Maintain a polite and engaging tone throughout the conversation.\
-        Utilize the context provided by the current website to inform your answers. \
-        If the answer is unclear, express uncertainty honestly without fabricating information. \
-        Ensure responses are concise yet comprehensive as needed. Note: Today's date and time is {current_time}. ---\:{context}"), 
+        ("system", "You are a virtual assistant named Jarvis (🤖),\
+        Utilize the context provided by the current website to inform your answers.  ---\:{context}\
+        Today's date and time is {current_time}."), 
         MessagesPlaceholder(variable_name="chat_history"),
         ("user", "{input}"),
     ])
@@ -107,14 +104,14 @@ def get_response(user_input, current_time):
     })
     return response['answer']
 
-st.set_page_config(page_title="Jarvis 🤖🔗 - Chat with websites", page_icon="🤖")
+st.set_page_config(page_title="Jarvis 🤖🔗 - (Experimental stage - Beta)", page_icon="🤖")
 st.title("Jarvis 🤖🔗 - Chat with websites")
 
 # Provide a short description of what the project is about along with a simple use case example
 st.markdown("""
 ## Project Overview
 
-Jarvis 🤖🔗 is designed to assist with summarization and question answering from specific websites. 
+Jarvis 🤖🔗 is designed to assist with summarization and question answering from the website [Lilian Weng's Blog Post](https://lilianweng.github.io/posts/2023-06-23-agent/) . 
 It is particularly useful for extracting concise information and providing answers to specific questions from extensive text materials, 
 making it an ideal tool for anyone looking to quickly gather insights from web content. (For a full description, check the sidebar in the top right corner.)
 
