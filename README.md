@@ -21,4 +21,18 @@ Jarvis 🤖🔗 is designed to streamline the process of summarizing and answeri
 Explore the insightful discussions in [Lilian Weng's Blog Post](https://lilianweng.github.io/posts/2023-06-23-agent/).
 
 
+### References ###
+
+**References:**
+
+1. Conversations and insights from various individuals encountered during the project's development.
+2. Harrison Chase, "LangChain: Chat with Your Data" from DeepLearningAI. Available at: [DeepLearning.AI - LangChain](https://www.deeplearning.ai/short-courses/langchain-chat-with-your-data/).
+3. Sophia Yang, LangChain tutorials on GitHub. Accessible at: [Sophia MYang - LangChain Tutorials](https://github.com/sophiamyang/tutorials-LangChain).
+4. Alejandro AO, Chat with Websites project repository on GitHub. Visit: [GitHub - Chat with Websites](https://github.com/alejandro-ao/chat-with-websites/tree/master).
+5. Various resources and documentation found on GitHub and Google.
+
+   
+
+
+
 
