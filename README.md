@@ -33,7 +33,7 @@ Explore the insightful discussions in [Lilian Weng's Blog Post](https://lilianwe
 
 * Repo owner Neil Fabião -> @neilfabiao ✌🏾
 
-![](https://komarev.com/ghpvc/?username=neilyJarvis20&color=blue)
+![](https://komarev.com/ghpvc/?username=neilyJarvis260&color=blue)
 
    
 
