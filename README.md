@@ -29,6 +29,12 @@ Explore the insightful discussions in [Lilian Weng's Blog Post](https://lilianwe
 4. Alejandro AO, Chat with Websites project repository on GitHub. Visit: [GitHub - Chat with Websites](https://github.com/alejandro-ao/chat-with-websites/tree/master).
 5. Various resources and documentation found on GitHub and Google.
 
+### Who do I talk to? ###
+
+* Repo owner Neil Fabião -> @neilfabiao ✌🏾
+
+![](https://komarev.com/ghpvc/?username=neilyJarvis20&color=blue)
+
    
 
 
