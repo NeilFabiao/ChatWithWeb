@@ -110,25 +110,21 @@ def get_response(user_input, current_time):
 st.set_page_config(page_title="Jarvis 🤖🔗 - Chat with websites", page_icon="🤖")
 st.title("Jarvis 🤖🔗 - Chat with websites")
 
-# Adjust the ratio or add more granularity if needed
-col1, col2 = st.columns([0.8, 0.2], gap="small")
+# Provide a short description of what the project is about along with a simple use case example
+st.markdown("""
+## Project Overview
 
-with col1:
-    st.markdown("## Settings", unsafe_allow_html=True)  # Using markdown to closely match header style
+This application, Jarvis 🤖🔗, is designed to assist with summarization and question answering from a specific website. It is particularly useful for extracting concise information and answering specific questions from extensive text materials, making it an ideal tool for researchers, students, and anyone looking to quickly gather insights from web content.
 
-with col2:
-    st.write("")  # This can be used to adjust vertical alignment if necessary
-    if st.button('Restart'):
-        #st.session_state.clear()  # Clearing the session state
-        #st.rerun()  # Rerun the app, which now has an empty state
-        
-        # Clearing the session state by deleting each key-value pair
-        keys = list(st.session_state.keys())
-        for key in keys:
-            del st.session_state[key]
-        st.cache_data.clear()
-        st.cache_resource.clear()
-        st.rerun()  # Rerun the app, which now has an empty state
+### Simple Use Case Example:
+**Background**: Jordan, a student, needs to understand the latest trends in machine learning for a school project but has limited time to read through extensive materials.
+
+**Use Case**: Jordan uses Jarvis 🤖🔗, which is set to analyze Lilian Weng's insightful blog post. Jordan asks, "Can you provide a summary of the main points discussed in this article?" Following the summary, Jordan queries more specific information, "What does Lilian Weng say about the future of reinforcement learning?"
+
+**Outcome**: With Jarvis's assistance, Jordan quickly obtains a clear summary and specific answers, enhancing the efficiency of his research and enabling him to focus on compiling his project with well-informed content.
+
+Website for analysis: [Lilian Weng's Blog Post](https://lilianweng.github.io/posts/2023-06-23-agent/)
+""", unsafe_allow_html=True)
 
 # Continue with the rest of your app
 # Set the default website URL and make it non-editable
