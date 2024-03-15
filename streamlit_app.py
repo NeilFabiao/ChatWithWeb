@@ -131,7 +131,10 @@ with col2:
         st.rerun()  # Rerun the app, which now has an empty state
 
 # Continue with the rest of your app
-website_url = st.text_input("Website URL", on_change=update_activity)
+# Set the default website URL and make it non-editable
+website_url = "https://lilianweng.github.io/posts/2023-06-23-agent/"
+st.text_input("Website URL", value=website_url, disabled=True, on_change=update_activity)
+
 
 
 if website_url:
