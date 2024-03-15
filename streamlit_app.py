@@ -111,8 +111,11 @@ st.set_page_config(page_title="Jarvis 🤖🔗 - Chat with websites", page_icon=
 st.title("Jarvis 🤖🔗 - Chat with websites")
 
 # Provide a short description of what the project is about along with a simple use case example
-st.markdown("""
-## Project Overview
+
+# Sidebar for description and use cases
+with st.sidebar:
+    st.write("## Project Overview")
+    st.markdown(""" ## Project Overview
 
 This application, Jarvis 🤖🔗, is designed to assist with summarization and question answering from a specific website. It is particularly useful for extracting concise information and answering specific questions from extensive text materials, making it an ideal tool for researchers, students, and anyone looking to quickly gather insights from web content.
 
@@ -128,6 +131,10 @@ This application, Jarvis 🤖🔗, is designed to assist with summarization and 
 - **Customer Support Automation**: Companies use Jarvis to answer common customer queries based on their product manuals and FAQ sections, improving customer service efficiency.
 Website for analysis: [Lilian Weng's Blog Post](https://lilianweng.github.io/posts/2023-06-23-agent/)
 """, unsafe_allow_html=True)
+
+# Main area for chat or other interactive elements
+st.write("Interact with Jarvis 🤖🔗 through the chat function. Ask any question to get started! (Description on the sidebar)")
+
 
 # Continue with the rest of your app
 # Set the default website URL and make it non-editable
