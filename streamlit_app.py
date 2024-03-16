@@ -116,7 +116,6 @@ Useful for providing answers to specific questions from extensive text materials
 for anyone looking to quickly gather insights from web content. (For a full description, check the sidebar in the top right corner.)
 
 #### Additional Use Cases:
-- **Conversational AI for Business**: Corporate users can integrate Jarvis into their intranet to provide employees with instant answers from company documents, reducing the time spent searching for information.
 - **Customer Support Automation**: Companies can use Jarvis to answer common customer queries based on their product manuals and FAQ sections, thereby improving the efficiency of customer service.
 
 """, unsafe_allow_html=True)
