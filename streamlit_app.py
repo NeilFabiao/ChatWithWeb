@@ -172,8 +172,8 @@ if website_url:
         user_query = st.chat_input("Type your message here...")
         if user_query:
             chat_history = st.session_state.chat_history
-            #current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            current_time = get_local_time().strftime("%Y-%m-%d %H:%M:%S")  # Use local time instead of server time
+            current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            #current_time = get_local_time().strftime("%Y-%m-%d %H:%M:%S")  # Use local time instead of server time
             response = get_response(user_query, current_time)
             st.session_state.chat_history.append(HumanMessage(content=user_query))
             st.session_state.chat_history.append(AIMessage(content=response))
