@@ -144,8 +144,6 @@ This application, Jarvis 🤖🔗, is designed to assist with summarization and 
 
 # Main area for chat or other interactive elements
 
-
-
 # Continue with the rest of your app
 # Set the default website URL and make it non-editable
 website_url = "https://lilianweng.github.io/posts/2023-06-23-agent/"
