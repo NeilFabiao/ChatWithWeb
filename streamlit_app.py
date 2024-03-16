@@ -22,6 +22,21 @@ from langchain.chains import create_history_aware_retriever, create_retrieval_ch
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from openai import OpenAI
 
+from datetime import datetime
+import pytz
+from tzwhere import tzwhere
+import geocoder
+
+def get_local_time():
+    # Get user's location based on IP (or ask user for their location)
+    g = geocoder.ip('me')  # 'me' uses the requester's IP address
+    tz = tzwhere.tzwhere()
+    user_timezone = tz.tzNameAt(g.latlng[0], g.latlng[1])  # Get timezone based on latitude and longitude
+
+    # Convert current time to user's local time
+    local_time = datetime.now(pytz.timezone(user_timezone))
+    return local_time
+
 # Initialize session state for last activity
 if 'last_activity' not in st.session_state:
     st.session_state.last_activity = datetime.now()
@@ -157,7 +172,8 @@ if website_url:
         user_query = st.chat_input("Type your message here...")
         if user_query:
             chat_history = st.session_state.chat_history
-            current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            #current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            current_time = get_local_time().strftime("%Y-%m-%d %H:%M:%S")  # Use local time instead of server time
             response = get_response(user_query, current_time)
             st.session_state.chat_history.append(HumanMessage(content=user_query))
             st.session_state.chat_history.append(AIMessage(content=response))
