@@ -72,7 +72,10 @@ def get_vectorstore_from_url(url):
     text_splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(chunk_size=1500, chunk_overlap=150)
     document_chunks = text_splitter.split_documents(document)
     embeddings = OpenAIEmbeddings()
-    vector_store = Chroma.from_documents(document_chunks, embeddings)
+    # create a vectorstore from the chunks
+    ABS_PATH: str = os.path.dirname(os.path.abspath(__file__))
+    DB_DIR: str = os.path.join(ABS_PATH, "db")
+    vector_store = Chroma.from_documents(document_chunks, embeddings,persist_directory=DB_DIR)
     return vector_store
 
 def get_combined_retriever_chain(vector_store, llm):
