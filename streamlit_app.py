@@ -22,21 +22,6 @@ from langchain.chains import create_history_aware_retriever, create_retrieval_ch
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from openai import OpenAI
 
-from datetime import datetime
-import pytz
-from tzwhere import tzwhere
-import geocoder
-
-def get_local_time():
-    # Get user's location based on IP (or ask user for their location)
-    g = geocoder.ip('me')  # 'me' uses the requester's IP address
-    tz = tzwhere.tzwhere()
-    user_timezone = tz.tzNameAt(g.latlng[0], g.latlng[1])  # Get timezone based on latitude and longitude
-
-    # Convert current time to user's local time
-    local_time = datetime.now(pytz.timezone(user_timezone))
-    return local_time
-
 # Initialize session state for last activity
 if 'last_activity' not in st.session_state:
     st.session_state.last_activity = datetime.now()
@@ -95,12 +80,15 @@ def get_combined_retriever_chain(vector_store, llm):
     context_prompt = ChatPromptTemplate.from_messages([
         MessagesPlaceholder(variable_name="chat_history"),
         ("user", "{input}"),
-        ("user", "Utilize the previous conversation with the user to guide the search.")
+        ("user", "Utilize the previous conversation with the user \
+        to guide the search. Focus only on information about the current website")
     ])
     conversation_prompt = ChatPromptTemplate.from_messages([
-        ("system", "You are a virtual assistant named Jarvis (🤖),\
-        Utilize the context provided by the current website to inform your answers.  ---\:{context}\
-        Today's date and time is {current_time}."), 
+        ("system", "You are a virtual assistant named Jarvis (🤖), designed to assist with learning.\
+        Maintain a polite and engaging tone throughout the conversation.\
+        Utilize the context provided by the current website to inform your answers. \
+        If the answer is unclear, express uncertainty honestly without fabricating information. \
+        Ensure responses are concise yet comprehensive as needed. Note: Today's date and time is {current_time}. ---\:{context}"), 
         MessagesPlaceholder(variable_name="chat_history"),
         ("user", "{input}"),
     ])
@@ -119,14 +107,14 @@ def get_response(user_input, current_time):
     })
     return response['answer']
 
-st.set_page_config(page_title="Jarvis 🤖🔗 - Chat with websites", page_icon="🤖")
-st.title("Jarvis 🤖🔗 - Chat with websites (Experimental stage - Beta)")
+st.set_page_config(page_title="Jarvis 🤖🔗 - (Experimental stage - Beta)", page_icon="🤖")
+st.title("Jarvis 🤖🔗 - Chat with websites")
 
 # Provide a short description of what the project is about along with a simple use case example
 st.markdown("""
-### Project Overview
+## Project Overview
 
-Jarvis 🤖🔗 is designed to assist with summarization and question answering from the website [Lilian Weng's Blog Post](https://lilianweng.github.io/posts/2023-06-23-agent/) . 
+JJarvis 🤖🔗 is designed to assist with summarization and question answering from the website [Lilian Weng's Blog Post](https://lilianweng.github.io/posts/2023-06-23-agent/) . 
 Useful for providing answers to specific questions from extensive text materials, 
 for anyone looking to quickly gather insights from web content. (For a full description, check the sidebar in the top right corner.)
 
@@ -159,6 +147,8 @@ This application, Jarvis 🤖🔗, is designed to assist with summarization and 
 
 # Main area for chat or other interactive elements
 
+
+
 # Continue with the rest of your app
 # Set the default website URL and make it non-editable
 website_url = "https://lilianweng.github.io/posts/2023-06-23-agent/"
@@ -173,7 +163,6 @@ if website_url:
         if user_query:
             chat_history = st.session_state.chat_history
             current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            #current_time = get_local_time().strftime("%Y-%m-%d %H:%M:%S")  # Use local time instead of server time
             response = get_response(user_query, current_time)
             st.session_state.chat_history.append(HumanMessage(content=user_query))
             st.session_state.chat_history.append(AIMessage(content=response))
