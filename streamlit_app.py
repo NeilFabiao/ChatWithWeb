@@ -80,15 +80,12 @@ def get_combined_retriever_chain(vector_store, llm):
     context_prompt = ChatPromptTemplate.from_messages([
         MessagesPlaceholder(variable_name="chat_history"),
         ("user", "{input}"),
-        ("user", "Utilize the previous conversation with the user \
-        to guide the search. Focus only on information about the current website")
+        ("user", "Utilize the previous conversation with the user to guide the search. ")
     ])
     conversation_prompt = ChatPromptTemplate.from_messages([
         ("system", "You are a virtual assistant named Jarvis (🤖), designed to assist with learning.\
-        Maintain a polite and engaging tone throughout the conversation.\
-        Utilize the context provided by the current website to inform your answers. \
-        If the answer is unclear, express uncertainty honestly without fabricating information. \
-        Ensure responses are concise yet comprehensive as needed. Note: Today's date and time is {current_time}. ---\:{context}"), 
+        Utilize the {context} provided by the current website (Lilian Weng's Blog Post) to inform your answers. \
+        Today's date and time is {current_time}."), 
         MessagesPlaceholder(variable_name="chat_history"),
         ("user", "{input}"),
     ])
