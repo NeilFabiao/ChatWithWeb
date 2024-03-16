@@ -4,12 +4,12 @@ requests
 playwright
 pysqlite3-binary
 tiktoken
-
+tzwhere
 
 chromadb==0.4.22
-langchain #== 0.1.9
-langchain_community #==0.0.16
-langchain_core #==0.1.17
+langchain 
+langchain_community 
+langchain_core 
 langchain_openai==0.0.5
 python-dotenv==1.0.1
 streamlit==1.30.0
