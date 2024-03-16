@@ -5,6 +5,8 @@ playwright
 pysqlite3-binary
 tiktoken
 tzwhere
+geocoder
+
 
 chromadb==0.4.22
 langchain 
