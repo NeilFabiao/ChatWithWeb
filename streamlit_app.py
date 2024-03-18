@@ -79,49 +79,32 @@ def get_vectorstore_from_url(url):
     return vector_store
 
 def get_combined_retriever_chain(vector_store, llm):
-    # Converts the vector store to a retriever for fetching relevant documents.
     retriever = vector_store.as_retriever()
-
-    # Creates a context prompt template using chat history and the user's current input.
     context_prompt = ChatPromptTemplate.from_messages([
-        MessagesPlaceholder(variable_name="chat_history"),  # Holds the past chat history.
-        ("user", "{input}"),  # The user's current input.
-        ("user", "Utilize the previous conversation with the user to guide the search. ")  # Additional instruction for the retriever.
+        MessagesPlaceholder(variable_name="chat_history"),
+        ("user", "{input}"),
+        ("user", "Utilize the previous conversation with the user to guide the search. ")
     ])
-
-    # Defines a conversation prompt template to assist with learning, utilizing the current website context.
     conversation_prompt = ChatPromptTemplate.from_messages([
         ("system", "You are a virtual assistant named Jarvis (🤖), designed to assist with learning.\
         Utilize the {context} provided by the current website (Lilian Weng's Blog Post) to inform your answers. \
-        Today's date and time is {current_time}."),  # Instruction including the virtual assistant name and the context to use.
-        MessagesPlaceholder(variable_name="chat_history"),  # The conversation history placeholder.
-        ("user", "{input}"),  # The user's input.
+        Today's date and time is {current_time}."), 
+        MessagesPlaceholder(variable_name="chat_history"),
+        ("user", "{input}"),
     ])
 
-    # Combines the language model and retriever with the context prompt to create a retriever that is aware of the chat history.
     context_retriever_chain = create_history_aware_retriever(llm, retriever, context_prompt)
-
-    # Combines the language model with the conversation prompt to handle document-based question answering.
     conversational_rag_chain = create_stuff_documents_chain(llm, conversation_prompt)
-
-    # Combines both retrieval chains to handle both context and conversation-based queries.
     combined_retrieval_chain = create_retrieval_chain(context_retriever_chain, conversational_rag_chain)
-
-    # Returns the combined retrieval chain.
     return combined_retrieval_chain
 
 def get_response(user_input, current_time):
-    # Retrieves the combined retriever chain based on the current vector store and language model.
     combined_chain = get_combined_retriever_chain(st.session_state.vector_store, llm)
-
-    # Invokes the combined chain with the current chat history, user input, and current time.
     response = combined_chain.invoke({
-        "chat_history": st.session_state.chat_history,  # The ongoing chat history.
-        "input": user_input,  # The current user input.
-        "current_time": current_time,  # The current time.
+        "chat_history": st.session_state.chat_history,
+        "input": user_input,
+        "current_time": current_time,
     })
-
-    # Returns the answer part of the response.
     return response['answer']
 
 st.set_page_config(page_title="Jarvis 🤖🔗 - (Experimental stage - Beta)", page_icon="🤖")
