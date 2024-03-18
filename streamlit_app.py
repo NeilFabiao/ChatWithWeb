@@ -79,32 +79,49 @@ def get_vectorstore_from_url(url):
     return vector_store
 
 def get_combined_retriever_chain(vector_store, llm):
+    # Converts the vector store to a retriever for fetching relevant documents.
     retriever = vector_store.as_retriever()
+
+    # Creates a context prompt template using chat history and the user's current input.
     context_prompt = ChatPromptTemplate.from_messages([
-        MessagesPlaceholder(variable_name="chat_history"),
-        ("user", "{input}"),
-        ("user", "Utilize the previous conversation with the user to guide the search. ")
+        MessagesPlaceholder(variable_name="chat_history"),  # Holds the past chat history.
+        ("user", "{input}"),  # The user's current input.
+        ("user", "Utilize the previous conversation with the user to guide the search. ")  # Additional instruction for the retriever.
     ])
+
+    # Defines a conversation prompt template to assist with learning, utilizing the current website context.
     conversation_prompt = ChatPromptTemplate.from_messages([
         ("system", "You are a virtual assistant named Jarvis (🤖), designed to assist with learning.\
         Utilize the {context} provided by the current website (Lilian Weng's Blog Post) to inform your answers. \
-        Today's date and time is {current_time}."), 
-        MessagesPlaceholder(variable_name="chat_history"),
-        ("user", "{input}"),
+        Today's date and time is {current_time}."),  # Instruction including the virtual assistant name and the context to use.
+        MessagesPlaceholder(variable_name="chat_history"),  # The conversation history placeholder.
+        ("user", "{input}"),  # The user's input.
     ])
 
+    # Combines the language model and retriever with the context prompt to create a retriever that is aware of the chat history.
     context_retriever_chain = create_history_aware_retriever(llm, retriever, context_prompt)
+
+    # Combines the language model with the conversation prompt to handle document-based question answering.
     conversational_rag_chain = create_stuff_documents_chain(llm, conversation_prompt)
+
+    # Combines both retrieval chains to handle both context and conversation-based queries.
     combined_retrieval_chain = create_retrieval_chain(context_retriever_chain, conversational_rag_chain)
+
+    # Returns the combined retrieval chain.
     return combined_retrieval_chain
 
 def get_response(user_input, current_time):
+    # Retrieves the combined retriever chain based on the current vector store and language model.
     combined_chain = get_combined_retriever_chain(st.session_state.vector_store, llm)
+
+    # Invokes the combined chain with the current chat history, user input, and current time.
     response = combined_chain.invoke({
-        "chat_history": st.session_state.chat_history,
-        "input": user_input,
-        "current_time": current_time,
+        "chat_history": st.session_state.chat_history,  # The ongoing chat history.
+        "input": user_input,  # The current user input.
+        "current_time": current_time,  # The current time.
     })
+
+    # Returns the answer part of the response.
     return response['answer']
 
 st.set_page_config(page_title="Jarvis 🤖🔗 - (Experimental stage - Beta)", page_icon="🤖")
@@ -153,30 +170,45 @@ This application, Jarvis 🤖🔗, is designed to assist with summarization and 
 website_url = "https://lilianweng.github.io/posts/2023-06-23-agent/"
 st.text_input("Website URL", value=website_url, disabled=True, on_change=update_activity)
 
+# Check if a website URL has been provided.
 if website_url:
+    # Check if the provided website URL is accessible and valid.
     if check_website(website_url):
-        # Initialize or reset the vector store for the current URL
+        # Initialize or reset the vector store for the current URL if the website is valid.
         init_or_reset_vector_store(website_url)
 
+        # Prompt the user to type their message.
         user_query = st.chat_input("Type your message here...")
+        # Check if the user has entered a query.
         if user_query:
+            # Retrieve the current chat history.
             chat_history = st.session_state.chat_history
+            # Get the current time in a specific format.
             current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            # Generate a response using the user's query and the current time.
             response = get_response(user_query, current_time)
+            # Append the user's message to the chat history.
             st.session_state.chat_history.append(HumanMessage(content=user_query))
+            # Append the AI's response to the chat history.
             st.session_state.chat_history.append(AIMessage(content=response))
+            # Update any other activity that needs to be done after getting a response.
             update_activity()
 
+        # Display each message in the chat history.
         for message in st.session_state.chat_history:
+            # Check if the message is from the AI and display it appropriately.
             if isinstance(message, AIMessage):
                 with st.chat_message("AI"):
                     st.write(message.content)
+            # Check if the message is from the Human and display it appropriately.
             elif isinstance(message, HumanMessage):
                 with st.chat_message("Human"):
                     st.write(message.content)
     else:
+        # Display an error if the website is not accessible or does not exist.
         st.error("The website is not accessible or does not exist.")
 else:
+    # Prompt the user to enter a website URL if none is provided.
     st.info("Please enter a website URL above.")
 
 check_activity()  # Check for user activity at the end
