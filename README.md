@@ -31,6 +31,8 @@ Explore the insightful discussions in [Lilian Weng's Blog Post](https://lilianwe
 
 * Repo owner Neil Fabião -> @neilfabiao ✌🏾
 
+### Note ###
+This project was created for research purposes 🥲. Please ensure to comply with guidelines and the terms of use for APIs and rights.
 ![](https://komarev.com/ghpvc/?username=neilyJarvis260&color=blue)
 
    
