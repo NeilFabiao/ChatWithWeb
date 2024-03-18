@@ -151,8 +151,7 @@ This application, Jarvis 🤖🔗, is designed to assist with summarization and 
 # Continue with the rest of your app
 # Set the default website URL and make it non-editable
 website_url = "https://lilianweng.github.io/posts/2023-06-23-agent/"
-#st.text_input("Website URL", value=website_url, disabled=True, on_change=update_activity)
-st.text_input("Website URL", value=website_url, disabled=True)
+st.text_input("Website URL", value=website_url, disabled=True, on_change=update_activity)
 
 if website_url:
     if check_website(website_url):
@@ -166,7 +165,7 @@ if website_url:
             response = get_response(user_query, current_time)
             st.session_state.chat_history.append(HumanMessage(content=user_query))
             st.session_state.chat_history.append(AIMessage(content=response))
-            #update_activity()
+            update_activity()
 
         for message in st.session_state.chat_history:
             if isinstance(message, AIMessage):
