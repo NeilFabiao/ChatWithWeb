@@ -116,7 +116,7 @@ st.markdown("""
 
 Jarvis 🤖🔗 is designed to assist with summarization and question answering from the website [Lilian Weng's Blog Post](https://lilianweng.github.io/posts/2023-06-23-agent/) . 
 Useful for providing answers to specific questions from extensive text materials, 
-for anyone looking to quickly gather insights from web content. (For a full description, check the sidebar in the top left corner or github link.)
+for anyone looking to quickly gather insights from web content. (For a full description, check the sidebar in the top right corner.)
 
 #### Additional Use Cases:
 - **Customer Support Automation**: Companies can use Jarvis to answer common customer queries based on their product manuals and FAQ sections, thereby improving the efficiency of customer service.
