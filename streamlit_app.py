@@ -22,25 +22,6 @@ from langchain.chains import create_history_aware_retriever, create_retrieval_ch
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from openai import OpenAI
 
-# Initialize session state for last activity
-if 'last_activity' not in st.session_state:
-    st.session_state.last_activity = datetime.now()
-
-# Function to update the session state variable to the current time
-def update_activity():
-    st.session_state.last_activity = datetime.now()
-
-def check_activity():
-    time_since_last_activity = datetime.now() - st.session_state.last_activity
-    if time_since_last_activity > timedelta(minutes=10):  # 10 minutes of inactivity
-        st.cache_data.clear()
-        st.cache_resource.clear()
-        st.rerun()  # Stop the Streamlit app
-    elif time_since_last_activity > timedelta(minutes=2):  # More than 2 minutes of inactivity
-        st.warning('You have been inactive for more than 10 minutes. The session will end after 2 more minute of inactivity.')
-
-check_activity()  # Check for user activity at the start
-
 llm_name = "gpt-3.5-turbo-1106"#gpt-4-0125-preview
 llm = ChatOpenAI(model_name=llm_name, temperature=0.7)
 
@@ -147,11 +128,9 @@ This application, Jarvis 🤖🔗, is designed to assist with summarization and 
 
 # Main area for chat or other interactive elements
 
-
-# Continue with the rest of your app
 # Set the default website URL and make it non-editable
 website_url = "https://lilianweng.github.io/posts/2023-06-23-agent/"
-st.text_input("Website URL", value=website_url, disabled=True, on_change=update_activity)
+st.text_input("Website URL", value=website_url, disabled=True)
 
 # Check if a website URL has been provided.
 if website_url:
@@ -174,8 +153,6 @@ if website_url:
             st.session_state.chat_history.append(HumanMessage(content=user_query))
             # Append the AI's response to the chat history.
             st.session_state.chat_history.append(AIMessage(content=response))
-            # Update any other activity that needs to be done after getting a response.
-            update_activity()
 
         # Display each message in the chat history.
         for message in st.session_state.chat_history:
@@ -193,6 +170,4 @@ if website_url:
 else:
     # Prompt the user to enter a website URL if none is provided.
     st.info("Please enter a website URL above.")
-
-check_activity()  # Check for user activity at the end
 
