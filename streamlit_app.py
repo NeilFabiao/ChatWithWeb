@@ -89,7 +89,7 @@ def get_response(user_input, current_time):
     return response['answer']
 
 st.set_page_config(page_title="Jarvis 🤖🔗 - (Experimental stage - Beta)", page_icon="🤖")
-st.title("Jarvis 🤖🔗 - Chat with websites")
+st.title("Jarvis 🤖🔗 - (Experimental stage - Beta)")
 
 # Provide a short description of what the project is about along with a simple use case example
 st.markdown("""
