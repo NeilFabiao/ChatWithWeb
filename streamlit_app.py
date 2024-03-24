@@ -89,10 +89,10 @@ def get_response(user_input, current_time):
 
     # Check if 'thoughts' and 'speak' are in the response and extract 'speak'
     if 'thoughts' in response and 'speak' in response['thoughts']:
-        return response['answer']   
+        return response['thoughts']['speak'] 
     else:
         # If the response structure is different, handle it here
-       return response['thoughts']['speak']
+       return response['answer']   
 
 st.set_page_config(page_title="Jarvis 🤖🔗 - (Experimental stage - Beta)", page_icon="🤖")
 st.title("Jarvis 🤖🔗 - (Experimental stage - Beta)")
