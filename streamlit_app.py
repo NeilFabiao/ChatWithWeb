@@ -87,8 +87,13 @@ def get_response(user_input, current_time):
         "current_time": current_time,
     })
 
-    
-    return response['answer']   
+    # Check if the response contains the 'thoughts' structure
+    if 'thoughts' in response and 'speak' in response['thoughts']:
+        # If yes, return the 'speak' part of the thoughts
+        return response['thoughts']['speak']
+    else:
+        # If no, return the response as it is
+        return response['answer'] 
 
 st.set_page_config(page_title="Jarvis 🤖🔗 - (Experimental stage - Beta)", page_icon="🤖")
 st.title("Jarvis 🤖🔗 - (Experimental stage - Beta)")
