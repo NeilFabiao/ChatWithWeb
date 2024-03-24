@@ -4,7 +4,10 @@ Exploring the capabilities of Retrieval-Augmented Generation (RAG) that leverage
 
 Jarvis 🤖🔗 is designed to streamline the process of summarizing and answering questions from specific websites. This tool excels in extracting precise information and responding to detailed queries from lengthy texts, proving invaluable for researchers, students, and anyone eager to quickly obtain insights from online materials.
 
-%Access the website using the link: [Chat with Web Portfolio](https://chatwithweb-portfolio.streamlit.app)
+<!---
+Access the website using the link: [Chat with Web Portfolio](https://chatwithweb-portfolio.streamlit.app)
+-->
+
 
 ### Simple Use Case Example:
 **Background**: Jordan, a student, is researching the latest trends in machine learning for a school project but is constrained by time.
