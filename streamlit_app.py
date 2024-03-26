@@ -92,8 +92,9 @@ def get_response(user_input, current_time):
     
     # Check if the response is a dictionary with a 'thoughts' key
     if isinstance(response, dict) and 'thoughts' in response:
-        # Extract the 'speak' part from the 'thoughts' dictionary
-        return response['thoughts']['speak']
+        thoughts_dict = response.get('thoughts', {})
+        speak_text = thoughts_dict.get('speak', '')
+        return speak_text
     # If the response is not a dictionary with 'thoughts' key, return the 'answer' part
     else:
         return response['answer']
