@@ -88,7 +88,7 @@ def get_response(user_input, current_time):
     })
 
     # Log the entire response for debugging
-    #print("Received response:", response)  # or use logging.info() for production code
+    print("Received response:", response)  # or use logging.info() for production code
     
     # Check if the response is a dictionary with a 'thoughts' key
     if isinstance(response, dict) and 'thoughts' in response:
