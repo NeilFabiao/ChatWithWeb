@@ -88,17 +88,15 @@ def get_response(user_input, current_time):
     })
 
     # Log the entire response for debugging
-    print("Received response:", response)  # or use logging.info() for production code
+    #print("Received response:", response)  # or use logging.info() for production code
     
-    # Check if the response is in the expected format
-    if isinstance(response, dict) and 'thoughts' in response and 'speak' in response['thoughts']:
+    # Check if the response is a dictionary with a 'thoughts' key
+    if isinstance(response, dict) and 'thoughts' in response:
+        # Extract the 'speak' part from the 'thoughts' dictionary
         return response['thoughts']['speak']
-    elif 'answer' in response:
-        return response['answer']
+    # If the response is not a dictionary with 'thoughts' key, return the 'answer' part
     else:
-        # Return a default response or log an error if the format is unexpected
-        print("Unexpected response format:", response)  # or use logging.error() for production code
-        return "Sorry, I encountered an unexpected issue."
+        return response['answer']
 
 st.set_page_config(page_title="Jarvis 🤖🔗 - (Experimental stage - Beta)", page_icon="🤖")
 st.title("Jarvis 🤖🔗 - (Experimental stage - Beta)")
