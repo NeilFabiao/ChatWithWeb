@@ -6,6 +6,7 @@ pysqlite3-binary
 tiktoken
 tzwhere
 geocoder
+streamlit
 
 
 chromadb==0.4.22
