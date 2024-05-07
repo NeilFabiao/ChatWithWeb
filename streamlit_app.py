@@ -64,8 +64,20 @@ def get_combined_retriever_chain(vector_store, llm):
     context_prompt = ChatPromptTemplate.from_messages([
         MessagesPlaceholder(variable_name="chat_history"),
         ("user", "{input}"),
-        ("user", "Utilize the previous conversation with the user to guide the search. ")
+        ("user","Given the above conversation, generate a search query to look up in order to get information relevant to the conversation")
     ])
+
+    #("user", "Utilize the previous conversation with the user to guide the search. ")
+    
+    conversation_prompt = ChatPromptTemplate.from_messages([
+        ("system", "You are a virtual assistant named Jarvis (🤖).\
+        Answer the user's questions based on the below context:\n\n{context}. \
+        Today's date and time is {current_time}."), 
+        MessagesPlaceholder(variable_name="chat_history"),
+        ("user", "{input}"),
+    ])
+
+    '''
     conversation_prompt = ChatPromptTemplate.from_messages([
         ("system", "You are a virtual assistant named Jarvis (🤖), designed to assist with learning.\
         Utilize the {context} provided by the current website (Lilian Weng's Blog Post) to inform your answers. \
@@ -73,6 +85,7 @@ def get_combined_retriever_chain(vector_store, llm):
         MessagesPlaceholder(variable_name="chat_history"),
         ("user", "{input}"),
     ])
+    '''
 
     context_retriever_chain = create_history_aware_retriever(llm, retriever, context_prompt)
     conversational_rag_chain = create_stuff_documents_chain(llm, conversation_prompt)
