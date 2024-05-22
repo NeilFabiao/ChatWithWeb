@@ -8,6 +8,9 @@ Jarvis 🤖🔗 is designed to streamline the process of summarizing and answeri
 Access the website using the link: [Chat with Web Portfolio](https://chatwithweb-portfolio.streamlit.app)
 -->
 
+### Example of Chatbot ###
+
+![alt-text-1](/Project/img/img_1.png)
 
 ### Simple Use Case Example:
 **Background**: Jordan, a student, is researching the latest trends in machine learning for a school project but is constrained by time.
