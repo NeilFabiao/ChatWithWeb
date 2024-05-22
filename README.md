@@ -10,7 +10,7 @@ Access the website using the link: [Chat with Web Portfolio](https://chatwithweb
 
 ### Example of Chatbot ###
 
-![alt-text-1](/Project/img/img_1.png)
+![alt-text-1](/img_jpng)
 
 ### Simple Use Case Example:
 **Background**: Jordan, a student, is researching the latest trends in machine learning for a school project but is constrained by time.
