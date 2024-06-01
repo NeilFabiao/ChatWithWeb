@@ -15,7 +15,7 @@ langchain_community
 langchain_core 
 langchain_openai==0.0.5
 python-dotenv==1.0.1
-streamlit==1.30.0
+#streamlit==1.30.0
 beautifulsoup4==4.12.2
 
 
